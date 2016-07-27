@@ -21,7 +21,7 @@ Diner.prototype.addDish = function(dish) {
 	this.dishes.push(dish);
 }
 
-Diner.portotype.calculateTotal = function(tax, tip) {
+Diner.prototype.calculateTotal = function(tax, tip) {
 	var total = 0;
 	this.dishes.forEach(function(dish){
 		total += dish.price;
