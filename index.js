@@ -1,6 +1,8 @@
 var Diner = function(name){
 	this.name = name;
 	this.dishes = [];
+	this.total = 0.00;
+
 };
 
 var Dish = function(name, price){
@@ -19,6 +21,13 @@ Diner.prototype.addDish = function(dish) {
 	this.dishes.push(dish);
 }
 
+Diner.portotype.calculateTotal = function(tax, tip) {
+	var total = 0;
+	this.dishes.forEach(function(dish){
+		total += dish.price;
+	});
+	this.total = total + (total * tax) + (total * tip);
+}
 
 diner1.addDish(dish1);
 diner1.addDish(dish2);
@@ -37,13 +46,10 @@ var Meal = function(){
 Meal.prototype.calculateTotal = function () {
 	var total = 0;
 
-	this.diners.forEach(function(diner){
-		diner.dishes.forEach(function(dish){
-			total += dish.price;	
-		});
-	
-
-	});
+	for (var i = 0; i < this.diners.length; i++) {
+		this.diners[i].calculateTotal(this.taxRate, this.tipRate);
+		total += this.diners[i].total;
+	}
 
 	this.totalAmount = total;
 }
@@ -58,19 +64,9 @@ meal.addDiner(diner1);
 meal.addDiner(diner2);
 
 meal.calculateTotal();
-console.log(meal.totalAmount);
-
-var tax = meal.totalAmount * meal.taxRate;
-var tip = meal.totalAmount * meal.tipRate;
-var mealTotal = meal.totalAmount + tax + tip;
-console.log("Meal Total is $" + mealTotal);
-
-var dinner1 = new Meal(diner1);
-var dinner2 = new Meal(diner2);
-
-var dinerCost1 = dinner1.calculateTotal();
-var dinerCost2 = dinner2.calculateTotal();
-console.log(tax);
+console.log('Meal Total is $' + meal.totalAmount);
+console.log('Bob owes: $' + diner1.total);
+console.log('Jane owes: $' + diner2.total);
 
 
 
